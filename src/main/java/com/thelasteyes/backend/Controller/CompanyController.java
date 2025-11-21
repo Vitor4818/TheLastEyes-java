@@ -52,4 +52,11 @@ public class CompanyController {
         return ResponseEntity.noContent().build();
     }
 
+    // Deleta empresa
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCompany(@PathVariable Long id){
+        companyService.deleteCompany(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }

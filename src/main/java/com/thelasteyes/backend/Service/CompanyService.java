@@ -68,5 +68,12 @@ public class CompanyService {
 
 
     //Deleta dados da empresa
+    @Transactional
+    public void deleteCompany(Long id){
+        Company company = companyRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Empresa com o id " + id + " não encontrada"));
+        companyRepository.delete(company);
+    }
+
 
 }
