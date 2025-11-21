@@ -2,6 +2,7 @@ package com.thelasteyes.backend.Controller;
 
 import com.thelasteyes.backend.Dto.GetCompanyDto;
 import com.thelasteyes.backend.Dto.PostCompanyDto;
+import com.thelasteyes.backend.Dto.PutCompanyDto;
 import com.thelasteyes.backend.Model.Company;
 import com.thelasteyes.backend.Service.CompanyService;
 import jakarta.validation.Valid;
@@ -42,6 +43,13 @@ public class CompanyController {
     public ResponseEntity<Void> createUser(@RequestBody @Valid PostCompanyDto dto){
         Company savedCompany = companyService.postCompany(dto);
         return ResponseEntity.created(URI.create("/company" + savedCompany.getId())).build();
+    }
+
+    //Atualiza dados da empresa
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> updateCompany(@PathVariable Long id, @Valid @RequestBody PutCompanyDto dto){
+        companyService.putCompany(id, dto);
+        return ResponseEntity.noContent().build();
     }
 
 }

@@ -1,5 +1,6 @@
 package com.thelasteyes.backend.Model;
 
+import com.thelasteyes.backend.Dto.PutCompanyDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,5 +32,22 @@ public class Company {
 
     @Column(name = "email")
     private String email;
+
+
+    public void updateData(PutCompanyDto dto) {
+
+        if (dto.tradeName() != null) {
+            this.tradeName = dto.tradeName();
+        }
+        if (dto.corporateName() != null) {
+            this.corporateName = dto.corporateName();
+        }
+        if (dto.phone() != null) {
+            this.phone = dto.phone();
+        }
+        if (dto.email() != null) {
+            this.email = dto.email();
+        }
+    }
 
 }

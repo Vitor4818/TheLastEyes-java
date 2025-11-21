@@ -2,6 +2,7 @@ package com.thelasteyes.backend.Service;
 
 import com.thelasteyes.backend.Dto.GetCompanyDto;
 import com.thelasteyes.backend.Dto.PostCompanyDto;
+import com.thelasteyes.backend.Dto.PutCompanyDto;
 import com.thelasteyes.backend.Exceptions.DataConflictException;
 import com.thelasteyes.backend.Exceptions.ResourceNotFoundException;
 import com.thelasteyes.backend.Model.Company;
@@ -52,6 +53,19 @@ public class CompanyService {
 
 
     //Atualiza dados da empresa
+    @Transactional
+    public void putCompany(Long id, PutCompanyDto dto) {
+        Company company = companyRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Empresa com o id " + id + " não encontrada"));
+        if (dto.email() != null && !dto.email().equals(company.getEmail())) {
+            if (companyRepository.existsByEmailAndIdNot(dto.email(), id)) {
+                throw new DataConflictException("Não foi possível atualizar dados da empresa. O email digitado já está em uso por outra empresa.");
+            }
+        }
+        company.updateData(dto);
+        companyRepository.save(company);
+    }
+
 
     //Deleta dados da empresa
 
