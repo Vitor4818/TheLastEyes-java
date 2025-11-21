@@ -14,11 +14,22 @@ public class Company {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_empresa")
     private Long id;
-    private Integer cnpj;
+
+    @Column(name = "cnpj")
+    private String cnpj;
+
+    @Column(name = "nome_fantasia")
     private String tradeName;
+
+    @Column(name = "razao_social")
     private String corporateName;
-    private Integer phone;
+
+    @Column(name = "telefone")
+    private String phone;
+
+    @Column(name = "email")
     private String email;
 
 }

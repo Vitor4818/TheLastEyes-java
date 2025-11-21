@@ -3,10 +3,10 @@ package com.thelasteyes.backend.Dto;
 import com.thelasteyes.backend.Model.Company;
 
 public record GetCompanyDto(Long id,
-                            Integer cnpj,
+                            String cnpj,
                             String tradeName,
                             String corporateName,
-                            Integer phone,
+                            String phone,
                             String email) {
 
     public GetCompanyDto(Company company) {
