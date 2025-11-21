@@ -1,6 +1,7 @@
 package com.thelasteyes.backend.Service;
 
 import com.thelasteyes.backend.Dto.GetCompanyDto;
+import com.thelasteyes.backend.Exceptions.ResourceNotFoundException;
 import com.thelasteyes.backend.Repository.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,6 +20,10 @@ public class CompanyService {
     }
 
     //Retorna empresa por ID
+    public GetCompanyDto getCompanyById(Long id){
+        return companyRepository.findById(id).map(GetCompanyDto::new)
+                .orElseThrow(()-> new ResourceNotFoundException("Empresa com o id "+id+" Não encontrada"));
+    }
 
     //Cadastra uma nova empresa
 
