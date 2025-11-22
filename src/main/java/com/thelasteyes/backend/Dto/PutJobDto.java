@@ -19,13 +19,13 @@ public record PutJobDto(
 
         @Min(value = 1, message = "A carga horária deve ser maior que zero.")
         @Max(value = 60, message = "A carga horária não pode exceder 60 horas.")
-        Integer weeklyHours, // Usamos Integer para permitir null
+        Integer weeklyHours,
 
         @Size(max = 30, message = "O modelo de trabalho deve ter no máximo 30 caracteres.")
         String workModel,
 
         @Min(value = 1, message = "A satisfação deve ser no mínimo 1.")
         @Max(value = 5, message = "A satisfação deve ser no máximo 5.")
-        Integer jobSatisfactionScore // Usamos Integer para permitir null
+        Integer jobSatisfactionScore
 ) {
 }

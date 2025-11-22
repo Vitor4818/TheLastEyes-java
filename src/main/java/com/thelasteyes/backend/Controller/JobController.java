@@ -5,14 +5,13 @@ import com.thelasteyes.backend.Dto.GetJobDto;
 import com.thelasteyes.backend.Dto.PostJobDto;
 import com.thelasteyes.backend.Dto.PutJobDto;
 import com.thelasteyes.backend.Model.Job;
-import com.thelasteyes.backend.Service.JobService; // Importa o JobService
+import com.thelasteyes.backend.Service.JobService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

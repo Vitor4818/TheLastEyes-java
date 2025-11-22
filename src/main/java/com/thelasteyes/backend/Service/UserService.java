@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -31,6 +32,10 @@ public class UserService {
 
     @Autowired
     private JobRepository jobRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
 
 
     // Retorna todos os usuários
@@ -70,7 +75,7 @@ public class UserService {
         User user = new User();
         user.setName(dto.name());
         user.setEmail(dto.email());
-        user.setPassword(dto.password());
+        user.setPassword(passwordEncoder.encode(dto.password()));
         user.setCpf(dto.cpf());
         user.setPhone(dto.phone());
         user.setBirthDate(dto.birthDate());
@@ -111,6 +116,10 @@ public class UserService {
 
             if (newCurrentJob.getUser() != null && newCurrentJob.getUser().getId() != user.getId()) {
                 throw new DataConflictException("O Job ID " + dto.currentJobId() + " já está vinculado a outro usuário");
+            }
+
+            if (dto.password() != null) {
+                user.setPassword(passwordEncoder.encode(dto.password()));
             }
 
             user.setCurrentJob(newCurrentJob);
