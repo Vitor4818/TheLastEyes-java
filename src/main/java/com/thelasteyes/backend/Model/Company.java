@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -32,6 +34,9 @@ public class Company {
 
     @Column(name = "email")
     private String email;
+
+    @OneToMany(mappedBy = "company") // "company" é o nome do campo na entidade Job
+    private List<Job> jobs;
 
 
     public void updateData(PutCompanyDto dto) {
