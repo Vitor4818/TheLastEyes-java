@@ -12,8 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class RoleService {
@@ -24,7 +22,7 @@ public class RoleService {
     public Page<GetRoleDto> getAllRoles(Pageable page, RoleFilter filter) {
         Specification<Role> spec = RoleSpecification.withFilter(filter);
         return roleRepository.findAll(spec, page)
-                .map(GetRoleDto::new); // 3. Mapeia o resultado para o DTO
+                .map(GetRoleDto::new);
     }
 
     public GetRoleDto getRoleById(Long id) {

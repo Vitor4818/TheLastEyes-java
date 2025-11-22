@@ -1,7 +1,6 @@
 package com.thelasteyes.backend.Dto;
 
 import com.thelasteyes.backend.Model.Job;
-import com.thelasteyes.backend.Model.Company;
 import java.time.LocalDate;
 
 public record GetJobDto(
