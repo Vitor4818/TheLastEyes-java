@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication
-public class 	TheLastEyesApplication {
+public class TheLastEyesApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(TheLastEyesApplication.class, args);
