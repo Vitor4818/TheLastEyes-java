@@ -1,5 +1,6 @@
 package com.thelasteyes.backend.Controller;
 
+import com.thelasteyes.backend.Dto.CompanyFilter;
 import com.thelasteyes.backend.Dto.GetCompanyDto;
 import com.thelasteyes.backend.Dto.PostCompanyDto;
 import com.thelasteyes.backend.Dto.PutCompanyDto;
@@ -27,8 +28,9 @@ public class CompanyController {
     //Retorna todas as empresas
     @GetMapping
     public ResponseEntity<Page<GetCompanyDto>> getAllCompanies(
-            @PageableDefault(size = 5, sort = "id", direction = Sort.Direction.ASC) Pageable page){
-    return ResponseEntity.ok(companyService.getAllCompanies(page));
+            @PageableDefault(size = 5, sort = "id", direction = Sort.Direction.ASC) Pageable page,
+            CompanyFilter filter ){
+    return ResponseEntity.ok(companyService.getAllCompanies(page, filter));
 
     }
 
