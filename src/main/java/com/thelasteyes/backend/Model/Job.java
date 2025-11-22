@@ -44,6 +44,12 @@ public class Job {
     @Column(name = "satisfacao_trabalho")
     private int jobSatisfactionScore;
 
+
+    @OneToOne(mappedBy = "currentJob") // <--- LADO INVERSO: Referencia o NOME DO CAMPO no User.java
+    private User user;
+
+
+
     public void updateData(PutJobDto dto) {
 
         if (dto.hireDate() != null) {
