@@ -25,7 +25,7 @@ import java.net.URI;
 @RestController
 @RequestMapping("/users")
 @Tag(name = "Usuários", description = "Endpoints para gerenciamento completo (CRUD) da entidade User.")
-@SecurityRequirement(name = "bearerAuth") // Aplica o requisito JWT a todos os métodos
+@SecurityRequirement(name = "bearerAuth")
 public class UserController {
 
     @Autowired

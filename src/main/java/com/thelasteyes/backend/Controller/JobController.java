@@ -25,7 +25,7 @@ import java.net.URI;
 @RestController
 @RequestMapping("/jobs")
 @Tag(name = "Empregos (Jobs)", description = "Endpoints para gerenciamento do registro de vínculo empregatício e histórico.")
-@SecurityRequirement(name = "bearerAuth") // Aplica o requisito JWT a todos os métodos
+@SecurityRequirement(name = "bearerAuth")
 public class JobController {
 
     @Autowired

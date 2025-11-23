@@ -12,6 +12,9 @@ import com.thelasteyes.backend.Repository.JobRepository;
 import com.thelasteyes.backend.Specification.JobSpecification;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -27,12 +30,14 @@ public class JobService {
     private CompanyRepository companyRepository;
 
     // Retorna todos os empregos
+    @Cacheable(value = "jobsList", key = "#filter.hashCode() + #page.pageNumber")
     public Page<GetJobDto> getAllJobs(Pageable page, JobFilter filter) {
         Specification<Job> spec = JobSpecification.withFilter(filter);
         return jobRepository.findAll(spec, page).map(GetJobDto::new);
     }
 
     // Retorna emprego por ID
+    @Cacheable(value = "jobById", key = "#id")
     public GetJobDto getJobById(Long id) {
         return jobRepository.findById(id).map(GetJobDto::new)
                 .orElseThrow(() -> new ResourceNotFoundException("Emprego com o id " + id + " não encontrado"));
@@ -40,6 +45,7 @@ public class JobService {
 
     // Cadastra um novo emprego
     @Transactional
+    @CacheEvict(value = "jobsList", allEntries = true)
     public Job postJob(PostJobDto dto) {
 
 
@@ -60,6 +66,8 @@ public class JobService {
 
     // Atualiza dados do emprego
     @Transactional
+    @CacheEvict(value = "jobsList", allEntries = true)
+    @CachePut(value = "jobById", key = "#id")
     public Job putJob(Long id, PutJobDto dto) {
         Job job = jobRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Emprego com o id " + id + " não encontrado"));
@@ -78,6 +86,7 @@ public class JobService {
 
     // Deleta dados do emprego
     @Transactional
+    @CacheEvict(value = {"jobsList", "jobById"}, allEntries = true)
     public void deleteJob(Long id) {
         Job job = jobRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Emprego com o id " + id + " não encontrado"));

@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/roles")
 @Tag(name = "Perfis (Roles)", description = "Endpoints para consulta da tabela de domínio de Perfis de Usuário.")
-@SecurityRequirement(name = "bearerAuth") // Requisito JWT para acesso
+@SecurityRequirement(name = "bearerAuth")
 public class RoleController {
 
     @Autowired
