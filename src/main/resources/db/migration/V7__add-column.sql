@@ -1,0 +1,1 @@
+ALTER TABLE TB_LST_CHECKINS ADD suggestion_text CLOB;
