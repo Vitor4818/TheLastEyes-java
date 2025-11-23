@@ -15,12 +15,13 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "TB_TLE_USER")
+@Table(name = "TB_LST_USUARIO")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @Column(name = "id_usuario")
+    private Long id;
 
     @Column(name = "nome_usuario")
     private String name;
