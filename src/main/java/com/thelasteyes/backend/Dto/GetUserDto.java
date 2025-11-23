@@ -5,7 +5,7 @@ import com.thelasteyes.backend.Model.Job;
 import java.time.LocalDate;
 
 public record GetUserDto(
-        int id,
+        Long id,
         String name,
         String email,
         String cpf,
