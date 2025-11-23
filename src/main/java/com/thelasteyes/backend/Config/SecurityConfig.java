@@ -34,7 +34,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/users").permitAll() // Cadastro de Usuário
                         .requestMatchers(HttpMethod.POST, "/login").permitAll() // Login/Geração de Token
                         .requestMatchers(HttpMethod.GET, "/roles").permitAll()  // Leitura de Perfis
-
+                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(

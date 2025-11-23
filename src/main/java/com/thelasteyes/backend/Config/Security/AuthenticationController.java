@@ -3,6 +3,10 @@ package com.thelasteyes.backend.Config.Security;
 import com.thelasteyes.backend.Dto.LoginDto;
 import com.thelasteyes.backend.Dto.TokenDto;
 import com.thelasteyes.backend.Model.User;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/login")
+@Tag(name = "Autenticação", description = "Endpoints para Login e geração de Tokens JWT.")
 public class AuthenticationController {
 
     @Autowired
@@ -28,6 +33,13 @@ public class AuthenticationController {
     @Autowired
     private AuthenticationService authenticationService;
 
+    @Operation(summary = "Realiza o login e gera Token JWT",
+            description = "Autentica o usuário com email e senha (BCrypt) e retorna um JSON Web Token (JWT) válido para acesso a endpoints protegidos.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Autenticação bem-sucedida. Token JWT retornado."),
+            @ApiResponse(responseCode = "400", description = "Credenciais inválidas ou dados malformados."),
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas (senha ou email incorretos).")
+    })
     @PostMapping
     public ResponseEntity<TokenDto> login(@RequestBody @Valid LoginDto dto) {
 

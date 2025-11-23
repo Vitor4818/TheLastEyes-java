@@ -15,6 +15,9 @@ import com.thelasteyes.backend.Repository.JobRepository;
 import com.thelasteyes.backend.Specification.UserSpecification;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -39,6 +42,7 @@ public class UserService {
 
 
     // Retorna todos os usuários
+    @Cacheable(value = "usersList", key = "#filter.hashCode() + #page.pageNumber")
     public Page<GetUserDto> getAllUsers(Pageable page, UserFilter filter) {
         Specification<User> spec = UserSpecification.withFilter(filter);
         return userRepository.findAll(spec, page)
@@ -46,6 +50,7 @@ public class UserService {
     }
 
     // Retorna usuário por ID
+    @Cacheable(value = "userById", key = "#id")
     public GetUserDto getUserById(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário com o id " + id + " não encontrado"));
@@ -55,6 +60,7 @@ public class UserService {
 
     // Cadastra um novo usuário
     @Transactional
+    @CacheEvict(value = "usersList", allEntries = true)
     public User postUser(PostUserDto dto) {
         if (userRepository.existsByEmail(dto.email())) {
             throw new DataConflictException("Esse email já está em uso");
@@ -88,6 +94,8 @@ public class UserService {
 
     // Atualiza dados do usuário
     @Transactional
+    @CacheEvict(value = "usersList", allEntries = true)
+    @CachePut(value = "userById", key = "#id")
     public GetUserDto putUser(Long id, PutUserDto dto) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário com o id " + id + " não encontrado"));
@@ -133,6 +141,7 @@ public class UserService {
 
     // Deleta dados do usuário
     @Transactional
+    @CacheEvict(value = {"usersList", "userById"}, allEntries = true)
     public void deleteUser(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário com o id " + id + " não encontrado"));
