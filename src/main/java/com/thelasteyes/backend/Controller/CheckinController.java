@@ -31,8 +31,7 @@ public class CheckinController {
     ) {
 
         String userEmail = userDetails.getUsername();
-        User userEntity = authenticationService.findUserEntityByEmail(userEmail);
-        Long userId = userEntity.getId();
+        Long userId = dto.userId();
         Long checkinId = producerService.createAndSendToQueue(userId, dto.text());
         return ResponseEntity.accepted().body(
                 "Pedido de classificação aceito. O resultado será processado e estará disponível em breve. " +
