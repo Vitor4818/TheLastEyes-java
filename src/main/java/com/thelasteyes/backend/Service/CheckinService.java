@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,5 +29,14 @@ public class CheckinService {
                 .orElseThrow(()-> new ResourceNotFoundException("Usuário com id " + userId + " não encontrado"));
         Page<Checkin> checkinsPage = checkinRepository.findAllByUserId(userId, pageable);
         return checkinsPage.map(CheckinResultDto::new);
+    }
+
+    public CheckinResultDto getLastResultByUserId(Long userId) {
+        userRepository.findById(userId)
+                .orElseThrow(()-> new ResourceNotFoundException("Usuário com id " + userId + " não encontrado"));
+        Optional<Checkin> latestCheckin = checkinRepository.findFirstByUserIdOrderByIdDesc(userId);
+        return latestCheckin
+                .map(CheckinResultDto::new)
+                .orElseThrow(() -> new ResourceNotFoundException("Nenhum check-in encontrado para o usuário " + userId));
     }
 }

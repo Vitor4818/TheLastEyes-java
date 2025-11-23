@@ -45,8 +45,6 @@ public class CheckinController {
         );
     }
 
-
-
     @GetMapping("/results")
     public ResponseEntity<Page<CheckinResultDto>> getResultsByUserId(Pageable pageable) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -57,4 +55,13 @@ public class CheckinController {
         return ResponseEntity.ok(results);
     }
 
+    @GetMapping("/latest-result")
+    public ResponseEntity<CheckinResultDto> getLastResultByUserId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userEmail = authentication.getName();
+        User userEntity = authenticationService.findUserEntityByEmail(userEmail);
+        Long userId = userEntity.getId();
+        CheckinResultDto latestResult = checkinService.getLastResultByUserId(userId);
+        return ResponseEntity.ok(latestResult);
+    }
 }
