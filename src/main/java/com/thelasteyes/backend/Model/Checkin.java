@@ -34,6 +34,9 @@ public class Checkin {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
+    @Column(columnDefinition = "CLOB")
+    private String suggestionText;
+
 
 
 }

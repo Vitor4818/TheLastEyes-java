@@ -17,31 +17,47 @@ public class ClassificationProcessingService {
     @Autowired
     private ClassificationApiGateway apiGateway;
 
+    @Autowired
+    private SuggestionService suggestionService;
+
     @Transactional
     public void processAndSaveClassification(Long checkinId) {
 
         Checkin checkin = checkinRepository.findById(checkinId)
                 .orElseThrow(() -> new RuntimeException("Check-in ID " + checkinId + " não encontrado."));
 
-        ClassificationResponseMessage response;
-
+        String sentimentContext = "NEUTRO";
+        Double scoreContext = 0.5;
+        boolean pythonSuccess = false;
         try {
             Long userId = checkin.getUserId();
             String checkinText = checkin.getCheckinText();
 
-            response = apiGateway.classify(userId, checkinText);
+            ClassificationResponseMessage response = apiGateway.classify(userId, checkinText);
+            sentimentContext = response.sentiment();
+            scoreContext = response.score();
 
-            checkin.setSentimentResult(response.sentiment());
-            checkin.setClassificationScore(response.score());
+            checkin.setSentimentResult(sentimentContext);
+            checkin.setClassificationScore(scoreContext);
             checkin.setStatus(ClassificationStatus.PROCESSED);
+            pythonSuccess = true;
 
         } catch (Exception e) {
             checkin.setStatus(ClassificationStatus.FAILED);
             checkinRepository.save(checkin);
-
-            throw new RuntimeException("Falha ao chamar a API de classificação ou erro de processamento: " + e.getMessage(), e);
         }
 
+        try {
+            String suggestion = suggestionService.generateHobbySuggestion(
+                    sentimentContext,
+                    checkin.getCheckinText()
+            );
+            checkin.setSuggestionText(suggestion);
+
+        } catch (Exception e) {
+            checkin.setSuggestionText("[ERRO IA] Falha ao gerar sugestão. Motivo: " + e.getMessage());
+        }
         checkinRepository.save(checkin);
+
     }
 }
