@@ -43,6 +43,9 @@ O sistema resolve o problema de latência e escalabilidade em análises de texto
 | **Link do Deploy (Aplicação Java)** | https://the-last-eyes-api-3v3p.onrender.com |
 | **Documentação (Swagger UI)**      | [Acessar Swagger](https://the-last-eyes-api-3v3p.onrender.com/swagger-ui/index.html#) |
 | **Painel do RabbitMQ (CloudAMQP)** | [Acessar painel](https://beaver.rmq.cloudamqp.com) |
+| RabbitMQ User: | wwzdqnqm |
+| RabbitMQ Password: | wF6nre_bfOCYk1WrzVJQ4bNt9cUKOuCM |
+
 
 
 ## 🔗 Apresentação e demonstração
@@ -50,4 +53,14 @@ O sistema resolve o problema de latência e escalabilidade em análises de texto
 | Recurso                           | Link                                         |
 |----------------------------------|---------------------------------------------|
 | **Vídeo de Demonstração do Software** | [Acessar vídeo de demonstração](https://youtu.be/asOSqmyzDec)          |
-| **Link de Apresentação da Solução**  | [Acessar Apresentação MVP - pitch )](https://www.youtube.com/watch?v=McTqF5ZQRqA)      |
+| **Link de Apresentação da Solução**  | [Acessar Apresentação MVP - pitch )](https://youtu.be/_OYpnkcw8Hs)      |
+
+
+## Integrantes
+
+| Nome Completo               | RM       |
+|-----------------------------|----------|
+| Pedro Henrique Lima Santos  | 558243   |
+| Vitor Gomes Martins         | 558244   |
+| Leonardo Pimentel Santos    | 557541   |
+
